@@ -3,7 +3,9 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"net/http"
+	"os"
 )
 
 // Creates a table if not exists
@@ -61,6 +63,11 @@ func InsertDB(db *sql.DB) http.HandlerFunc {
 		e = json.NewDecoder(r.Body).Decode(&event)
 		if e != nil {
 			http.Error(w, e.Error(), http.StatusBadRequest)
+		}
+		fmt.Println(event.Pass)
+		if event.Pass != os.Getenv("PASS") {
+			http.Error(w, "NOT VALID PASS", http.StatusBadRequest)
+			return
 		}
 		stmt, e := db.Prepare("insert into event (id, event_image, event_title, event_description) values (?,?,?,?); ")
 		if e != nil {

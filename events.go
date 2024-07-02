@@ -6,4 +6,5 @@ type Event struct {
 	Image       []byte `json:"event_image"`
 	Title       string `json:"event_title"`
 	Description string `json:"event_description"`
+	Pass        string `json:"pass"`
 }
