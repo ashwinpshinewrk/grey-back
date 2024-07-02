@@ -1,2 +1,4 @@
-backend
+greyscale
 *.db
+go.sum
+.env
